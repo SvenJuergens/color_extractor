@@ -17,17 +17,14 @@ namespace SvenJuergens\ColorExtractor\Services\Extraction;
 use League\ColorExtractor\ColorExtractor;
 use League\ColorExtractor\Color;
 use League\ColorExtractor\Palette;
-use SvenJuergens\ColorExtractor\Services\ColorExtractorService;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\Index\ExtractorInterface;
 use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * A service to extract metadata from files using PHP's built-in methods.
+ * A service to extract color metadata from files
  *
- * @author      Xavier Perseguers <xavier@causal.ch>
- * @license     http://www.gnu.org/copyleft/gpl.html
  */
 class ColorMetadataExtraction implements ExtractorInterface
 {
@@ -141,15 +138,25 @@ class ColorMetadataExtraction implements ExtractorInterface
             ]
         );
         $colors = self::extractFromFile($processedImage);
-
+        foreach ($colors as &$color){
+            $color = Color::fromIntToHex($color);
+        }
+        unset($color);
         $metadata = [
-            'tx_colorextractor_color1' => Color::fromIntToHex($colors[0]),
-            'tx_colorextractor_color2' => Color::fromIntToHex($colors[1]),
-            'tx_colorextractor_color3' => Color::fromIntToHex($colors[2]),
-            'tx_colorextractor_color4' => Color::fromIntToHex($colors[3]),
-            'tx_colorextractor_color5' => Color::fromIntToHex($colors[4]),
+            'tx_colorextractor_color1' => $colors[0],
+            'tx_colorextractor_color2' => $colors[1],
+            'tx_colorextractor_color3' => $colors[2],
+            'tx_colorextractor_color4' => $colors[3],
+            'tx_colorextractor_color5' => $colors[4],
         ];
-
+        if (TYPO3_DLOG) {
+            GeneralUtility::devLog(
+                'file Extraction:' . $file->getPublicUrl(),
+                'color_extractor',
+                0,
+                $colors
+            );
+        }
         return $metadata;
     }
     /**
