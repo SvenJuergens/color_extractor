@@ -169,7 +169,6 @@ class ColorMetadataExtraction implements ExtractorInterface
         if (!is_callable([$file, 'getPublicUrl'])) {
             throw new \Error('huhu');
         }
-
         $palette = Palette::fromFilename(GeneralUtility::getFileAbsFileName($file->getPublicUrl()));
         $extractor = new ColorExtractor($palette);
         return $extractor->extract(5);
