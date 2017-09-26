@@ -16,8 +16,8 @@ namespace SvenJuergens\ColorExtractor\Command;
 
 use SvenJuergens\ColorExtractor\Services\Extraction\ColorMetadataExtraction;
 use TYPO3\CMS\Core\Resource\File;
+use TYPO3\CMS\Core\Resource\Index\MetaDataRepository;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
-use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 
@@ -68,11 +68,24 @@ class ColorExtractorCommandController extends CommandController
         }
     }
 
-    public function callColorExtractorServiceOnFile($file)
+    /**
+     * @param File $file
+     */
+    public function callColorExtractorServiceOnFile(File $file)
     {
-        DebugUtility::debug($file, __FILE__ . __LINE__);
         if($this->colorExtractorService->canProcess($file)){
-            $this->colorExtractorService->extractMetaData($file);
+            $metaData = $this->colorExtractorService->extractMetaData($file);
+            $this->getMetaDataRepository()->update($file->getUid(), $metaData);
         }
+    }
+
+    /**
+     * Returns an instance of the FileIndexRepository
+     *
+     * @return MetaDataRepository
+     */
+    protected function getMetaDataRepository()
+    {
+        return MetaDataRepository::getInstance();
     }
 }
