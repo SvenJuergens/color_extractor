@@ -46,7 +46,7 @@ class ColorExtractorCommandController extends CommandController
      * @param int $max Max images in one loop
      * @param string $foldersToUpdate Comma separated list of Folders that needs to be updated
      */
-    public function updateCommand($max = 10, $foldersToUpdate = '')
+    public function updateCommand($max = 50, $foldersToUpdate = '')
     {
         if (!empty($foldersToUpdate)) {
             // Check for valid folders
@@ -61,8 +61,17 @@ class ColorExtractorCommandController extends CommandController
                 $folder = $defaultStorage->getFolder(str_replace('fileadmin', '', $folder));
                 /** @var File $files */
                 $files = $defaultStorage->getFilesInFolder($folder);
+                $counter = 0;
                 foreach ($files as $file){
-                    $this->callColorExtractorServiceOnFile($file);
+                    if($counter >= $max){
+                        break;
+                    }
+                    $fileMeta = $file->getProperties();
+                    if(isset($fileMeta['tx_colorextractor_color1'])
+                    && empty($fileMeta['tx_colorextractor_color1'])){
+                        $this->callColorExtractorServiceOnFile($file);
+                        $counter++;
+                    }
                 }
             }
         }
