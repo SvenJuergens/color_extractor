@@ -25,7 +25,7 @@ ColorExtractor
 	:Description:
 
 	:Keywords:
-		comma,separated,list,of,keywords
+		color,extractor,service,meta
 
 	:Copyright:
 		2017
@@ -53,11 +53,5 @@ ColorExtractor
 	:titlesonly:
 
 	Introduction/Index
-	User/Index
 	Administrator/Index
-	Configuration/Index
-	Developer/Index
-	KnownProblems/Index
-	ToDoList/Index
-	ChangeLog/Index
-	Links
+    User/Index
