@@ -52,6 +52,6 @@ ColorExtractor
 	:maxdepth: 3
 	:titlesonly:
 
-	Introduction/Index
-	Administrator/Index
+    Introduction/Index
+    Administrator/Index
     User/Index
