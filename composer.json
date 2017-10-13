@@ -1,7 +1,7 @@
 {
     "name": "svenjuergens/color-extractor",
     "type": "typo3-cms-extension",
-    "description": "",
+    "description": "TYPO3 Wrapper Extension for thephpleague/color-extractor. Extracts colors from images, which can then be used in frontend design",
     "authors": [
         {
             "name": "Sven J\u00fcrgens",

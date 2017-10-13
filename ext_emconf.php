@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'ColorExtractor',
-    'description' => '',
+    'description' => 'TYPO3 Wrapper Extension for thephpleague/color-extractor. Extracts colors from images, which can then be used in frontend design',
     'category' => 'plugin',
     'author' => 'Sven Jürgens',
     'author_email' => 'typo3@blue-side.de',
