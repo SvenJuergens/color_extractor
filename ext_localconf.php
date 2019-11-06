@@ -2,7 +2,7 @@
 defined('TYPO3_MODE') || die('Access denied.');
 
 $extPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('color_extractor');
-if ( !class_exists('League\\ColorExtractor\\Color')
+if (!class_exists('League\\ColorExtractor\\Color')
     || !class_exists('League\\ColorExtractor\\ColorExtractor')
     || !class_exists('League\\ColorExtractor\\Palette')
 ) {

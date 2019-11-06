@@ -21,7 +21,6 @@ use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 
-
 /**
  * Language command controller updates translation packages
  */
@@ -39,7 +38,6 @@ class ColorExtractorCommandController extends CommandController
     {
         $this->colorExtractorService = $colorExtractorService;
     }
-
 
     /**
      * Update each folder
@@ -62,13 +60,13 @@ class ColorExtractorCommandController extends CommandController
                 /** @var File $files */
                 $files = $defaultStorage->getFilesInFolder($folder);
                 $counter = 0;
-                foreach ($files as $file){
-                    if($counter >= $max){
+                foreach ($files as $file) {
+                    if ($counter >= $max) {
                         break;
                     }
                     $fileMeta = $file->getProperties();
-                    if(isset($fileMeta['tx_colorextractor_color1'])
-                    && empty($fileMeta['tx_colorextractor_color1'])){
+                    if (isset($fileMeta['tx_colorextractor_color1'])
+                    && empty($fileMeta['tx_colorextractor_color1'])) {
                         $this->callColorExtractorServiceOnFile($file);
                         $counter++;
                     }
@@ -82,7 +80,7 @@ class ColorExtractorCommandController extends CommandController
      */
     public function callColorExtractorServiceOnFile(File $file)
     {
-        if($this->colorExtractorService->canProcess($file)){
+        if ($this->colorExtractorService->canProcess($file)) {
             $metaData = $this->colorExtractorService->extractMetaData($file);
             $this->getMetaDataRepository()->update($file->getUid(), $metaData);
         }

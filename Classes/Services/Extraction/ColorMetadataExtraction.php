@@ -14,8 +14,8 @@ namespace SvenJuergens\ColorExtractor\Services\Extraction;
  * The TYPO3 project - inspiring people to share!
  */
 
-use League\ColorExtractor\ColorExtractor;
 use League\ColorExtractor\Color;
+use League\ColorExtractor\ColorExtractor;
 use League\ColorExtractor\Palette;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -27,19 +27,18 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * A service to extract color metadata from files
- *
  */
 class ColorMetadataExtraction implements ExtractorInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $priority = 50;
 
     /** @var array */
-    protected $supportedFileExtensions = array(
+    protected $supportedFileExtensions = [
         'gif',      // IMAGETYPE_GIF
         'jpg',      // IMAGETYPE_JPEG
         'jpeg',     // IMAGETYPE_JPEG
@@ -47,12 +46,12 @@ class ColorMetadataExtraction implements ExtractorInterface, LoggerAwareInterfac
         'bmp',      // IMAGETYPE_BMP
         'tif',      // IMAGETYPE_TIFF_II / IMAGETYPE_TIFF_MM
         'tiff',     // IMAGETYPE_TIFF_II / IMAGETYPE_TIFF_MM
-    );
+    ];
 
     /**
      * @var array
      */
-    protected $supportedFileTypes = array();
+    protected $supportedFileTypes = [];
 
     /**
      * Returns an array of supported file types;
@@ -79,9 +78,9 @@ class ColorMetadataExtraction implements ExtractorInterface, LoggerAwareInterfac
      */
     public function getDriverRestrictions()
     {
-        return array(
+        return [
             'Local',
-        );
+        ];
     }
 
     /**
@@ -98,7 +97,6 @@ class ColorMetadataExtraction implements ExtractorInterface, LoggerAwareInterfac
         return max(1, min(100, $this->priority));
     }
 
-
     /**
      * Returns the execution priority of the extraction Service
      * Should be between 1 and 100, 100 means runs as first service, 1 runs at last service
@@ -114,7 +112,7 @@ class ColorMetadataExtraction implements ExtractorInterface, LoggerAwareInterfac
      * Checks if the given file can be processed by this extractor.
      *
      * @param File $file
-     * @return boolean
+     * @return bool
      */
     public function canProcess(File $file)
     {
@@ -131,7 +129,7 @@ class ColorMetadataExtraction implements ExtractorInterface, LoggerAwareInterfac
      * @param array $previousExtractedData optional, contains the array of already extracted data
      * @return array
      */
-    public function extractMetaData(File $file, array $previousExtractedData = array())
+    public function extractMetaData(File $file, array $previousExtractedData = [])
     {
         $sizeParts = [200, 200];
         $processedImage = $file->process(
@@ -143,7 +141,7 @@ class ColorMetadataExtraction implements ExtractorInterface, LoggerAwareInterfac
             ]
         );
         $colors = self::extractFromFile($processedImage);
-        foreach ($colors as &$color){
+        foreach ($colors as &$color) {
             $color = Color::fromIntToHex($color);
         }
         unset($color);

@@ -15,7 +15,6 @@ foreach ([1, 2, 3, 4, 5] as $item) {
     ];
 }
 
-
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns(
     'sys_file_metadata',
     $tmp_color_extractor_columns
