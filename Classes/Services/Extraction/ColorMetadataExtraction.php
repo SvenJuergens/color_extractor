@@ -17,6 +17,9 @@ namespace SvenJuergens\ColorExtractor\Services\Extraction;
 use League\ColorExtractor\ColorExtractor;
 use League\ColorExtractor\Color;
 use League\ColorExtractor\Palette;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\Index\ExtractorInterface;
 use TYPO3\CMS\Core\Resource\ProcessedFile;
@@ -26,8 +29,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * A service to extract color metadata from files
  *
  */
-class ColorMetadataExtraction implements ExtractorInterface
+class ColorMetadataExtraction implements ExtractorInterface, LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var integer
      */
@@ -149,13 +154,14 @@ class ColorMetadataExtraction implements ExtractorInterface
             'tx_colorextractor_color4' => $colors[3],
             'tx_colorextractor_color5' => $colors[4],
         ];
-        if (TYPO3_DLOG) {
-            GeneralUtility::devLog(
-                'file Extraction:' . $file->getPublicUrl(),
-                'color_extractor',
-                0,
-                $colors
-            );
+        if ((bool)GeneralUtility::makeInstance(ExtensionConfiguration::class)
+            ->get('color_extractor', 'useLogging')
+        ) {
+            $this->logger->info('color_extractor', [
+                'file Extraction' => $file->getPublicUrl(),
+                'colors' => implode(',', $colors ?? [])
+
+            ]);
         }
         return $metadata;
     }

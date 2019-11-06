@@ -18,3 +18,11 @@ if (TYPO3_MODE === 'BE') {
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers']['color_extractor'] =
         \SvenJuergens\ColorExtractor\Command\ColorExtractorCommandController::class;
 }
+
+$GLOBALS['TYPO3_CONF_VARS']['LOG']['SvenJuergens']['ColorExtractor']['writerConfiguration'] = [
+    \TYPO3\CMS\Core\Log\LogLevel::INFO => [
+        \TYPO3\CMS\Core\Log\Writer\FileWriter::class => [
+            'logFileInfix' => 'colorExtractor'
+        ]
+    ]
+];
