@@ -148,11 +148,11 @@ class ColorMetadataExtraction implements ExtractorInterface, LoggerAwareInterfac
         }
         unset($color);
         $metadata = [
-            'tx_colorextractor_color1' => $colors[0],
-            'tx_colorextractor_color2' => $colors[1],
-            'tx_colorextractor_color3' => $colors[2],
-            'tx_colorextractor_color4' => $colors[3],
-            'tx_colorextractor_color5' => $colors[4],
+            'tx_colorextractor_color1' => $colors[0] ?? '',
+            'tx_colorextractor_color2' => $colors[1] ?? '',
+            'tx_colorextractor_color3' => $colors[2] ?? '',
+            'tx_colorextractor_color4' => $colors[3] ?? '',
+            'tx_colorextractor_color5' => $colors[4] ?? '',
         ];
         if ((bool)GeneralUtility::makeInstance(ExtensionConfiguration::class)
             ->get('color_extractor', 'useLogging')
