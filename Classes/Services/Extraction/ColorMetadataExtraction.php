@@ -59,7 +59,7 @@ class ColorMetadataExtraction implements ExtractorInterface, LoggerAwareInterfac
      *
      * @return array
      */
-    public function getFileTypeRestrictions()
+    public function getFileTypeRestrictions(): array
     {
         return $this->supportedFileTypes;
     }
@@ -76,7 +76,7 @@ class ColorMetadataExtraction implements ExtractorInterface, LoggerAwareInterfac
      *
      * @return array
      */
-    public function getDriverRestrictions()
+    public function getDriverRestrictions(): array
     {
         return [
             'Local',
@@ -92,7 +92,7 @@ class ColorMetadataExtraction implements ExtractorInterface, LoggerAwareInterfac
      *
      * @return int
      */
-    public function getPriority()
+    public function getPriority(): int
     {
         return max(1, min(100, $this->priority));
     }
@@ -103,7 +103,7 @@ class ColorMetadataExtraction implements ExtractorInterface, LoggerAwareInterfac
      *
      * @return int
      */
-    public function getExecutionPriority()
+    public function getExecutionPriority(): int
     {
         return $this->getPriority();
     }
@@ -114,7 +114,7 @@ class ColorMetadataExtraction implements ExtractorInterface, LoggerAwareInterfac
      * @param File $file
      * @return bool
      */
-    public function canProcess(File $file)
+    public function canProcess(File $file): bool
     {
         $fileExtension = strtolower($file->getProperty('extension'));
         return in_array($fileExtension, $this->supportedFileExtensions);
@@ -128,8 +128,10 @@ class ColorMetadataExtraction implements ExtractorInterface, LoggerAwareInterfac
      * @param File $file
      * @param array $previousExtractedData optional, contains the array of already extracted data
      * @return array
+     * @throws \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException
+     * @throws \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException
      */
-    public function extractMetaData(File $file, array $previousExtractedData = [])
+    public function extractMetaData(File $file, array $previousExtractedData = []): array
     {
         $sizeParts = [200, 200];
         $processedImage = $file->process(
@@ -168,7 +170,7 @@ class ColorMetadataExtraction implements ExtractorInterface, LoggerAwareInterfac
      * @return array
      * @throws \Error
      */
-    public static function extractFromFile($file)
+    public static function extractFromFile($file): array
     {
         if (!is_callable([$file, 'getPublicUrl'])) {
             throw new \Error('huhu');
