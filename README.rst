@@ -16,8 +16,6 @@ Based on the https://github.com/thephpleague/color-extractor
 Screenshots
 -----------
 
-This chapter should help people figure how the extension works. Remove it
-if not relevant.
 
 .. figure:: Documentation/Images/sysfile_metadata.png
    :width: 449px
